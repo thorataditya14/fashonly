@@ -13,7 +13,7 @@ export default function Categories() {
         <Container>
             {
                 categories.map(item => (
-                    <CategoryItem item={item}/>
+                    <CategoryItem item={item} key={item.id}/>
                 ))
             }
         </Container>
