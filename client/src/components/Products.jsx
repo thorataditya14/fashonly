@@ -4,10 +4,10 @@ import { popularProducts } from "../data";
 
 
 const Container = styled.div`
-    flex: 1;
-    margin: 3px;
-    height: 70vh;
-    position: relative;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 `;
 
 
@@ -16,7 +16,7 @@ export default function Products() {
         <Container>
             {
                 popularProducts.map((item) => (
-                    <Product item={item}/>
+                    <Product item={item} key={item.id}/>
                 ))
             }
         </Container>
