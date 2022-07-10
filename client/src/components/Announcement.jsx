@@ -1,6 +1,9 @@
 import styled from "styled-components"
+import { mobile } from "../responsive";
+
 
 const Container = styled.div`
+    width: 100vw;
     height: 30px;
     background-color: teal;
     color: white;
@@ -10,6 +13,8 @@ const Container = styled.div`
     font-size: 14px;
     font-weight: 500;
 `;
+
+
 export default function Announcement() {
     return (
         <Container>

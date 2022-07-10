@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Product from "./Product"
 import { popularProducts } from "../data";
+import { mobile } from "../responsive";
 
 
 const Container = styled.div`
@@ -8,6 +9,7 @@ const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    ${mobile({ flexDirection: 'column' })}
 `;
 
 

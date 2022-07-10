@@ -4,24 +4,31 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Remove from '@mui/icons-material/Remove';
 import Add from '@mui/icons-material/Add';
+import { mobile } from '../responsive';
 
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
     padding: 20px;
+    ${mobile({ padding: '10px' })}
 `;
 
 const Title = styled.h1`
     font-weight: 300;
     text-align: center;
+    /* width: 100%; */
 `;
 
 const Top = styled.div`
+    /* width: 100%; */
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     padding: 20px;
+    ${mobile({ justifyContent: 'space-around' })}
+
 `;
 
 const TopButton = styled.button`
@@ -33,7 +40,14 @@ const TopButton = styled.button`
     color: ${props => props.type === 'filled' && 'white'};
 `;
 
-const TopTexts = styled.div``;
+const TopTexts = styled.div`
+    /* width: 100%; */
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    ${mobile({ display: 'none' })}
+`;
 
 const TopText = styled.span`
     margin: 0 10px;
@@ -44,6 +58,7 @@ const TopText = styled.span`
 const Bottom = styled.div`
     display: flex;
     justify-content: space-between;
+    ${mobile({ flexDirection: 'column' })}
 `;
 
 const Info = styled.div`
@@ -53,6 +68,7 @@ const Info = styled.div`
 const Product = styled.div`
     display: flex;
     justify-content: space-between;
+    ${mobile({ flexDirection: 'column' })}
 `;
 
 const ProductDetail = styled.div`
@@ -101,11 +117,13 @@ const ProductAmountContainer = styled.div`
 const ProductAmount = styled.div`
     font-size: 24px;
     margin: 5px;
+    ${mobile({ margin: '5px 15px' })}
 `;
 
 const ProductPrice = styled.div`
     font-size: 30px;
     font-weight: 200;
+    ${mobile({ marginBottom: '20px' })}
 `;
 
 const Hr = styled.hr`
@@ -216,11 +234,6 @@ export default function Cart() {
                                 <ProductPrice>$ 20</ProductPrice>
                             </PriceDetail>
                         </Product>
-
-
-
-
-
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
