@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import Remove from "@mui/icons-material/Remove";
 import Add from "@mui/icons-material/Add";
 import { mobile } from '../responsive';
+import { useLocation } from 'react-router-dom';
 
 
 const Container = styled.div`
@@ -121,6 +122,10 @@ const Button = styled.button`
 
 
 export default function Product() {
+    
+    const location = useLocation();
+    const id = location.pathname.split("/")[2];
+
     return (
         <Container>
             <Announcement/>

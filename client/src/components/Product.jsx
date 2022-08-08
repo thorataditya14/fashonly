@@ -3,6 +3,7 @@ import SearchOutlined from "@mui/icons-material/SearchOutlined";
 import FavoriteBorderOutlined from "@mui/icons-material/FavoriteBorderOutlined";
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { Link } from "react-router-dom";
 
 
 const Info = styled.div`
@@ -76,7 +77,9 @@ export default function Product({item}) {
                     <ShoppingCartOutlined/>
                 </Icon>
                 <Icon>
-                    <SearchOutlined/>
+                    <Link to={`/product/$item._id}`}>
+                        <SearchOutlined/>
+                    </Link>
                 </Icon>
                 <Icon>
                     <FavoriteBorderOutlined/>
