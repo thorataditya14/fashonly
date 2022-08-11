@@ -52,19 +52,12 @@ export default function ProductList() {
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState("newest");
 
-    const handleFilters = (e) => {
-        const value = e.target.value;
+    const handleFilters = (event) => {
+        const value = event.target.value;
         setFilters({
-            [e.target.name]: value.toLowerCase(),
-            ...filters
+            ...filters,
+            [event.target.name]: value
         });
-    };
-
-    const me = "ed";
-    me.toLowerCase()
-
-    const handleSort = (e) => {
-        setSort(e.target.value);
     };
 
     return (
@@ -74,17 +67,15 @@ export default function ProductList() {
             <Title>{cat}</Title>
             <FilterContainer>
                 <Filter>
-                    <FilterText>
-                        Filter Products:
-                    </FilterText>
+                    <FilterText> Filter Products:</FilterText>
                     <Select name="color" onChange={handleFilters}>
                         <Option disabled>Color</Option>
-                        <Option>White</Option>
-                        <Option>Black</Option>
-                        <Option>Red</Option>
-                        <Option>Blue</Option>
-                        <Option>Yellow</Option>
-                        <Option>Green</Option>
+                        <Option>white</Option>
+                        <Option>black</Option>
+                        <Option>red</Option>
+                        <Option>blue</Option>
+                        <Option>yellow</Option>
+                        <Option>green</Option>
                     </Select>
                     <Select name="size" onChange={handleFilters}>
                         <Option disabled>Size</Option>
@@ -96,10 +87,8 @@ export default function ProductList() {
                     </Select>
                 </Filter>
                 <Filter>
-                    <FilterText>
-                        Sort Products:
-                    </FilterText>
-                    <Select onChange={handleSort}>
+                    <FilterText> Sort Products:</FilterText>
+                    <Select onChange={(event) => setSort(event.target.value)}>
                         <Option value="newest">Newest</Option>
                         <Option value="asc">Price (asc)</Option>
                         <Option value="desc">Price (desc)</Option>
