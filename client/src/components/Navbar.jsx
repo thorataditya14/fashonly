@@ -4,6 +4,7 @@ import ShoppingCartOutlined from '@mui/icons-material/ShoppingCartOutlined';
 import { Badge } from '@mui/material';
 import { mobile } from '../responsive';
 import { useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
 
 
 const Container = styled.div`
@@ -85,18 +86,18 @@ export default function Navbar() {
                     </SearchContainer>
                 </Left>
                 <Center>
-                    <Logo>
-                        LAMA.
-                    </Logo>
+                    <Logo>LAMA.</Logo>
                 </Center>
                 <Right>
                     <MenuItem>REGISTER</MenuItem>
                     <MenuItem>SIGN IN</MenuItem>
-                    <MenuItem>
-                        <Badge badgeContent={quantity} color='primary'>
-                            <ShoppingCartOutlined/>
-                        </Badge>
-                    </MenuItem>
+                    <Link to="/cart">
+                        <MenuItem>
+                            <Badge badgeContent={quantity} color='primary'>
+                                <ShoppingCartOutlined/>
+                            </Badge>
+                        </MenuItem>
+                    </Link>
                 </Right>
             </Wrapper>
         </Container>
