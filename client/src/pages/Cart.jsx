@@ -1,14 +1,13 @@
-import styled from 'styled-components';
 import Announcement from '../components/Announcement';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import Add from '@mui/icons-material/Add';
-import Remove from '@mui/icons-material/Remove';
+import styled from 'styled-components';
 import StripeCheckout from 'react-stripe-checkout';
-import { useEffect, useState } from 'react';
-import { useHistory, useNavigate } from 'react-router';
+import { Add, Remove } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { userRequest } from '../requestMethods';
+import { useHistory } from 'react-router';
 import { mobile } from '../responsive';
 
 
@@ -28,37 +27,28 @@ const Title = styled.h1`
 `;
 
 const Top = styled.div`
-    /* width: 100%; */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
     padding: 20px;
-    ${mobile({ justifyContent: 'space-around' })}
 `;
 
 const TopButton = styled.button`
     padding: 10px;
     font-weight: 600;
     cursor: pointer;
-    border: ${props => props.type === 'filled' && 'none'};
-    background-color: ${props => props.type === 'filled' ? 'black' : 'transparent'};
-    color: ${props => props.type === 'filled' && 'white'};
+    border: ${(props) => props.type === 'filled' && 'none'};
+    background-color: ${(props) => props.type === 'filled' ? 'black' : 'transparent'};
+    color: ${(props) => props.type === 'filled' && 'white'};
 `;
 
 const TopTexts = styled.div`
-    /* width: 100%; */
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-wrap: wrap;
     ${mobile({ display: 'none' })}
 `;
-
 const TopText = styled.span`
-    margin: 0 10px;
     text-decoration: underline;
     cursor: pointer;
+    margin: 0px 10px;
 `;
 
 const Bottom = styled.div`
@@ -83,7 +73,7 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-      width: 200px;
+    width: 200px;
 `;
 
 const Details = styled.div`
@@ -168,40 +158,38 @@ const Button = styled.button`
     background-color: black;
     color: white;
     font-weight: 600;
-    cursor: pointer;
 `;
 
-
-export default function Cart() {
+const Cart = () => {
 
     const cart = useSelector((state) => state.cart);
     const [stripeToken, setStripeToken] = useState(null);
     const history = useHistory();
-  
+
     const onToken = (token) => {
         setStripeToken(token);
     };
-  
+
     useEffect(() => {
         const makeRequest = async () => {
             try {
-                const res = await userRequest.post("/checkout/payment", {
+                const res = await userRequest.post('/checkout/payment', {
                     tokenId: stripeToken.id,
-                    amount: 500
+                    amount: 500,
                 });
-                history.push("/success", {
+                history.push('/success', {
                     stripeData: res.data,
-                    products: cart
+                    products: cart,
                 });
-            } catch {}
+            } catch { }
         };
         stripeToken && makeRequest();
     }, [stripeToken, cart.total, history]);
 
     return (
         <Container>
-            <Announcement/>
-            <Navbar/>
+            <Announcement />
+            <Navbar />
             <Wrapper>
                 <Title>YOUR BAG</Title>
                 <Top>
@@ -214,36 +202,36 @@ export default function Cart() {
                 </Top>
                 <Bottom>
                     <Info>
-                        {
-                            cart.products.map((product) => {
-                                <Product>
-                                    <ProductDetail>
-                                        <Image src={product.img}/>
-                                        <Details>
-                                            <ProductName>
-                                                <b>Product:</b> {product.title}
-                                            </ProductName>
-                                            <ProductId>
-                                                <b>ID:</b> {product._id}
-                                            </ProductId>
-                                            <ProductColor color={product.color}/>
-                                            <ProductSize>
-                                                <b>Size:</b> {product.size}
-                                            </ProductSize>
-                                        </Details>
-                                    </ProductDetail>
-                                    <PriceDetail>
-                                        <ProductAmountContainer>
-                                            <Add/>
-                                            <ProductAmount>{product.quantity}</ProductAmount>
-                                            <Remove/>
-                                        </ProductAmountContainer>
-                                        <ProductPrice>$ {product.quantity * product.price}</ProductPrice>
-                                    </PriceDetail>
-                                </Product>
-                            })
-                        }
-                        <Hr/>
+                        {cart.products.map((product) => (
+                            <Product>
+                                <ProductDetail>
+                                    <Image src={product.img} />
+                                    <Details>
+                                        <ProductName>
+                                            <b>Product:</b> {product.title}
+                                        </ProductName>
+                                        <ProductId>
+                                            <b>ID:</b> {product._id}
+                                        </ProductId>
+                                        <ProductColor color={product.color} />
+                                        <ProductSize>
+                                            <b>Size:</b> {product.size}
+                                        </ProductSize>
+                                    </Details>
+                                </ProductDetail>
+                                <PriceDetail>
+                                    <ProductAmountContainer>
+                                        <Add />
+                                        <ProductAmount>{product.quantity}</ProductAmount>
+                                        <Remove />
+                                    </ProductAmountContainer>
+                                    <ProductPrice>
+                                        $ {product.price * product.quantity}
+                                    </ProductPrice>
+                                </PriceDetail>
+                            </Product>
+                        ))}
+                        <Hr />
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
@@ -259,14 +247,13 @@ export default function Cart() {
                             <SummaryItemText>Shipping Discount</SummaryItemText>
                             <SummaryItemPrice>$ -5.90</SummaryItemPrice>
                         </SummaryItem>
-                            <SummaryItem type='total'>
+                        <SummaryItem type='total'>
                             <SummaryItemText>Total</SummaryItemText>
                             <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
                         </SummaryItem>
-
                         <StripeCheckout
-                            name="Lama Shop"
-                            image="https://avatars.githubusercontent.com/u/1486366?v=4"
+                            name='Lama Shop'
+                            image='https://avatars.githubusercontent.com/u/1486366?v=4'
                             billingAddress
                             shippingAddress
                             description={`Your total is $${cart.total}`}
@@ -279,7 +266,10 @@ export default function Cart() {
                     </Summary>
                 </Bottom>
             </Wrapper>
-            <Footer/>
+            <Footer />
         </Container>
-    )
-}
+    );
+};
+
+
+export default Cart;

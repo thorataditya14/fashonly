@@ -1,8 +1,7 @@
-import styled from "styled-components";
-import axios from "axios";
 import Product from "./Product";
-import { mobile } from "../responsive";
+import styled from "styled-components";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 const Container = styled.div`
@@ -10,11 +9,10 @@ const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    ${mobile({ flexDirection: 'column' })}
 `;
 
 
-export default function Products({ cat, filters, sort }) {
+const Products = ({ cat, filters, sort }) => {
 
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -28,29 +26,28 @@ export default function Products({ cat, filters, sort }) {
                         : "http://localhost:5000/api/products"
                 );
                 setProducts(res.data);
-            }
-            catch (err) {}
+            } catch (err) { }
         };
         getProducts();
     }, [cat]);
 
     useEffect(() => {
-        cat && setFilteredProducts(
-            products.filter((item) =>
-                Object.entries(filters).every(([key, value]) =>
-                    item[key].includes(value)
+        cat &&
+            setFilteredProducts(
+                products.filter((item) =>
+                    Object.entries(filters).every(([key, value]) =>
+                        item[key].includes(value)
+                    )
                 )
-            )
-        );
+            );
     }, [products, cat, filters]);
-
 
     useEffect(() => {
         if (sort === "newest") {
             setFilteredProducts((prev) =>
                 [...prev].sort((a, b) => a.createdAt - b.createdAt)
             );
-        } 
+        }
         else if (sort === "asc") {
             setFilteredProducts((prev) =>
                 [...prev].sort((a, b) => a.price - b.price)
@@ -65,11 +62,14 @@ export default function Products({ cat, filters, sort }) {
 
     return (
         <Container>
-            {
-                cat
-                    ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
-                    : products.slice(0, 8).map((item) => <Product item={item} key={item.id} />)
-            }
+            {cat
+                ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
+                : products
+                    .slice(0, 8)
+                    .map((item) => <Product item={item} key={item.id} />)}
         </Container>
     );
 };
+
+
+export default Products;

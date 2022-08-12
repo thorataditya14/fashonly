@@ -1,19 +1,19 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../redux/apiCalls";
+import { login } from '../redux/apiCalls';
 import { mobile } from '../responsive';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Container = styled.div`
     width: 100vw;
     height: 100vh;
     background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
+            rgba(255, 255, 255, 0.5),
+            rgba(255, 255, 255, 0.5)
+        ),
+        url('https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
+            center;
     background-size: cover;
     display: flex;
     align-items: center;
@@ -47,15 +47,20 @@ const Input = styled.input`
 const Button = styled.button`
     width: 40%;
     border: none;
-    margin-bottom: 10px;
     padding: 15px 20px;
     background-color: teal;
     color: white;
     cursor: pointer;
+    margin-bottom: 10px;
+
+    &:disabled {
+        color: green;
+        cursor: not-allowed;
+    }
 `;
 
 const Link = styled.a`
-    margin: 5px 0;
+    margin: 5px 0px;
     font-size: 12px;
     text-decoration: underline;
     cursor: pointer;
@@ -65,14 +70,13 @@ const Error = styled.span`
     color: red;
 `;
 
+const Login = () => {
 
-export default function Login() {
-
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const { isFetching, error } = useSelector((state) => state.user);
     const dispatch = useDispatch();
-  
+
     const handleClick = (e) => {
         e.preventDefault();
         login(dispatch, { username, password });
@@ -84,25 +88,23 @@ export default function Login() {
                 <Title>SIGN IN</Title>
                 <Form>
                     <Input
-                        placeholder="username"
+                        placeholder='username'
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <Input
-                        placeholder="password"
-                        type="password"
+                        placeholder='password'
+                        type='password'
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button onClick={handleClick} disabled={isFetching}>
-                        LOGIN
-                    </Button>
-                    {
-                        error &&
-                        <Error>Something went wrong...</Error>
-                    }
-                    <Link>FORGOT PASSWORD?</Link>
-                    <Link>CREATE NEW ACCOUNT</Link>
+                    <Button onClick={handleClick} disabled={isFetching}>LOGIN</Button>
+                    {error && <Error>Something went wrong...</Error>}
+                    <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+                    <Link>CREATE A NEW ACCOUNT</Link>
                 </Form>
             </Wrapper>
         </Container>
-    )
-}
+    );
+};
+
+
+export default Login;

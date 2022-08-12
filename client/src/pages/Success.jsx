@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
+import { useSelector } from 'react-redux';
 import { userRequest } from '../requestMethods';
 
 
-export default function Success() {
+const Success = () => {
 
     const location = useLocation();
     const data = location.state.stripeData;
     const cart = location.state.cart;
-    const [orderId, setOrderId] = useState(null);
     const currentUser = useSelector((state) => state.user.currentUser);
-  
+    const [orderId, setOrderId] = useState(null);
+
     useEffect(() => {
         const createOrder = async () => {
             try {
-                const res = await userRequest.post("/orders", {
+                const res = await userRequest.post('/orders', {
                     userId: currentUser._id,
                     products: cart.products.map((item) => ({
                         productId: item._id,
@@ -25,8 +25,7 @@ export default function Success() {
                     address: data.billing_details.address
                 });
                 setOrderId(res.data._id);
-            }
-            catch {}
+            } catch { }
         };
         data && createOrder();
     }, [cart, data, currentUser]);
@@ -34,19 +33,20 @@ export default function Success() {
     return (
         <div
             style={{
-                height: "100vh",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center"
+                height: '100vh',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center'
             }}
         >
-        {
-            orderId
+            {orderId
                 ? `Order has been created successfully. Your order number is ${orderId}`
-                : `Successfull. Your order is being prepared...`
-        }
-        <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
-      </div>
-    )
-}
+                : `Successfull. Your order is being prepared...`}
+            <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
+        </div>
+    );
+};
+
+
+export default Success;
