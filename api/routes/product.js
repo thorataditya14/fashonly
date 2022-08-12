@@ -6,10 +6,12 @@ const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = requir
 // Create Product
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
     const newProduct = new Product(req.body);
+
     try {
         const savedProduct = await newProduct.save();
         res.status(200).json(savedProduct);
-    } catch (err) {
+    }
+    catch (err) {
         res.status(500).json(err);
     }
 });
@@ -19,12 +21,12 @@ router.post("/", verifyTokenAndAdmin, async (req, res) => {
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
     try {
         const updatedProduct = await Product.findByIdAndUpdate(
-            req.params.id, {
+            req.params.id,
+            {
                 $set: req.body
             },
-            {
-                new: true
-            });
+            { new: true }
+        );
         res.status(200).json(updatedProduct);
     }
     catch (err) {
@@ -37,7 +39,7 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
     try {
         await Product.findByIdAndDelete(req.params.id);
-        res.status(200).json("Product has been deleted . . .");
+        res.status(200).json("Product has been deleted...");
     }
     catch (err) {
         res.status(500).json(err);
@@ -65,7 +67,7 @@ router.get("/", async (req, res) => {
         let products;
 
         if (qNew) {
-            products = await Product.find().sort({createdAt: -1}).limit(1);
+            products = await Product.find().sort({ createdAt: -1 }).limit(1);
         }
         else if (qCategory) {
             products = await Product.find({
