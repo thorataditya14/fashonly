@@ -14,7 +14,7 @@ const Image = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    ${mobile({ height: "20vh" })}
+    ${mobile({ height: '20vh' })}
 `;
 
 const Info = styled.div`
@@ -48,7 +48,7 @@ const CategoryItem = ({ item }) => {
     return (
         <Container>
             <Link to={`/products/${item.cat}`}>
-                <Image src={item.img}/>
+                <Image src={item.img} />
                 <Info>
                     <Title>{item.title}</Title>
                     <Button>SHOP NOW</Button>

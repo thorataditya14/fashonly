@@ -5,7 +5,7 @@ import Cart from './pages/Cart';
 import Success from './pages/Success';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import { BrowserRouter as Router, Switch, Route, Redirect, } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 
