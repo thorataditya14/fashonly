@@ -52,6 +52,7 @@ const Center = styled.div`
 
 const Logo = styled.h1`
     font-weight: bold;
+    text-decoration: none;
     ${mobile({ fontSize: '24px' })}
 `;
 const Right = styled.div`
@@ -77,6 +78,7 @@ const Navbar = () => {
     return (
         <Container>
             <Wrapper>
+
                 <Left>
                     <Language>EN</Language>
                     <SearchContainer>
@@ -84,20 +86,31 @@ const Navbar = () => {
                         <Search style={{ color: 'gray', fontSize: 16 }} />
                     </SearchContainer>
                 </Left>
+
                 <Center>
-                    <Logo>Fashonly</Logo>
-                </Center>
-                <Right>
-                    <MenuItem>REGISTER</MenuItem>
-                    <MenuItem>SIGN IN</MenuItem>
-                    <Link to='/cart'>
-                        <MenuItem>
-                            <Badge badgeContent={quantity} color='primary'>
-                                <ShoppingCartOutlined />
-                            </Badge>
-                        </MenuItem>
+					<Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
+                        <Logo>Fashonly</Logo>
                     </Link>
-                </Right>
+                </Center>
+
+                <Right>
+					<Link to='/register' style={{ textDecoration: 'none', color: 'black' }}>
+						<MenuItem>REGISTER</MenuItem>
+					</Link>
+
+					<Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>
+						<MenuItem>SIGN IN</MenuItem>
+					</Link>
+
+					<Link to='/cart' style={{ textDecoration: 'none', color: 'black' }}>
+						<MenuItem>
+							<Badge badgeContent={quantity} color='primary'>
+								<ShoppingCartOutlined/>
+							</Badge>
+						</MenuItem>
+					</Link>
+				</Right>
+
             </Wrapper>
         </Container>
     );

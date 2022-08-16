@@ -192,6 +192,7 @@ const Cart = () => {
             <Navbar />
             <Wrapper>
                 <Title>YOUR BAG</Title>
+{/*
                 <Top>
                     <TopButton>CONTINUE SHOPPING</TopButton>
                     <TopTexts>
@@ -200,6 +201,7 @@ const Cart = () => {
                     </TopTexts>
                     <TopButton type='filled'>CHECKOUT NOW</TopButton>
                 </Top>
+*/}
                 <Bottom>
                     <Info>
                         {cart.products.map((product) => (
