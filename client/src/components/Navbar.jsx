@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import axios from "axios";
 import { Badge } from '@material-ui/core';
 import { Search, ShoppingCartOutlined } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
@@ -8,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { mobile } from '../responsive';
 import { useEffect, useState } from "react";
 import { logout } from '../redux/apiCalls';
+import { publicRequest } from '../requestMethods';
 
 
 const Container = styled.div`
@@ -111,7 +111,7 @@ const Navbar = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/products/search?q=${query}`);
+                const res = await publicRequest.get(`/products/search?q=${query}`);
                 setData(res.data);
             }
             catch { }
