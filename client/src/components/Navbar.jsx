@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from "axios";
 import { Badge } from '@material-ui/core';
 import { Search, ShoppingCartOutlined } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { mobile } from '../responsive';
+import { useEffect, useState } from "react";
+import { logout } from '../redux/apiCalls';
 
 
 const Container = styled.div`
@@ -16,20 +19,16 @@ const Wrapper = styled.div`
     padding: 10px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    ${mobile({ padding: '10px 0px' })}
+    justify-content: space-evenly;
+    ${mobile({ flexDirection: 'column' })}
 `;
 
 const Left = styled.div`
-    flex: 1;
+    flex: 2;
     display: flex;
     align-items: center;
-`;
-
-const Language = styled.span`
-    font-size: 14px;
-    cursor: pointer;
-    ${mobile({ display: 'none' })}
+    margin-left: 80px;
+    justify-content: left;
 `;
 
 const SearchContainer = styled.div`
@@ -37,29 +36,60 @@ const SearchContainer = styled.div`
     display: flex;
     align-items: center;
     margin-left: 25px;
-    padding: 5px;
+    padding: 6px;
+    width: 90%;
+    justify-content: space-between;
 `;
 
 const Input = styled.input`
+    width: 100%;
     border: none;
+    height: 15px;
+    outline: none;
     ${mobile({ width: '50px' })}
 `;
 
+const SearchResult = styled.div`
+    width: 90%;
+    z-index:3;
+    position: absolute;
+    top: 30px;
+    border-radius: 0 0 10px 10px;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 2px 3px 5px -1px rgb(0 0 0 / 30%);
+`;
+
+const SearchItem = styled.div`
+    text-align: left;
+    height: 25px;
+    padding: 10px 30px;
+    background-color: white;
+    border-radius: 0 0 4px 4px;
+`;
+
 const Center = styled.div`
-    flex: 1;
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
     text-align: center;
 `;
 
 const Logo = styled.h1`
     font-weight: bold;
     text-decoration: none;
+    text-align: center;
     ${mobile({ fontSize: '24px' })}
 `;
+
 const Right = styled.div`
-    flex: 1;
+    flex: 2;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: right;
+    margin-right: 80px;
     ${mobile({ flex: 2, justifyContent: 'center' })}
 `;
 
@@ -72,44 +102,91 @@ const MenuItem = styled.div`
 
 
 const Navbar = () => {
+    const quantity = useSelector((state) => state.cart.quantity);
+    const user = useSelector((state) => state.user.currentUser);
 
-    const quantity = useSelector((state) => state.cart.quantity)
+    const [query, setQuery] = useState("");
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/products/search?q=${query}`);
+                setData(res.data);
+            }
+            catch { }
+        };
+        if (query.length > 0) fetchData();
+    }, [query]);
+
+
+
+    const dispatch = useDispatch();
+
+    const handleClick = (e) => {
+        logout(dispatch);
+    };
+
 
     return (
         <Container>
             <Wrapper>
 
                 <Left>
-                    <Language>EN</Language>
-                    <SearchContainer>
-                        <Input placeholder='Search' />
-                        <Search style={{ color: 'gray', fontSize: 16 }} />
-                    </SearchContainer>
+                    <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
+                        <Logo>Fashonly</Logo>
+                    </Link>
                 </Left>
 
                 <Center>
-					<Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
-                        <Logo>Fashonly</Logo>
-                    </Link>
+                    <SearchContainer>
+                        <Input
+                            placeholder='Search for products, categories and more'
+                            onChange={(e) => setQuery(e.target.value.toLowerCase())}
+                        />
+                        <Search style={{ color: 'gray', fontSize: 20, height: 15, width: 15 }} />
+                    </SearchContainer>
+
+                    <SearchResult>
+                        {data && data.slice(0, 10).map(((item) => (
+                            <Link
+                                to={`/product/${item._id}`}
+                                style={{ textDecoration: 'none', color: 'black' }}
+                            >
+                                <SearchItem>{item.title}</SearchItem>
+                            </Link>
+                        )))}
+                    </SearchResult>
                 </Center>
 
                 <Right>
-					<Link to='/register' style={{ textDecoration: 'none', color: 'black' }}>
-						<MenuItem>REGISTER</MenuItem>
-					</Link>
+                    {user ? (
+                        <Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>
+                            <MenuItem
+                                onClick={handleClick}
+                            >
+                                LOG OUT
+                            </MenuItem>
+                        </Link>
+                    ) : (
+                        <>
+                            <Link to='/register' style={{ textDecoration: 'none', color: 'black' }}>
+                                <MenuItem>REGISTER</MenuItem>
+                            </Link>
 
-					<Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>
-						<MenuItem>SIGN IN</MenuItem>
-					</Link>
-
-					<Link to='/cart' style={{ textDecoration: 'none', color: 'black' }}>
-						<MenuItem>
-							<Badge badgeContent={quantity} color='primary'>
-								<ShoppingCartOutlined/>
-							</Badge>
-						</MenuItem>
-					</Link>
-				</Right>
+                            <Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>
+                                <MenuItem>SIGN IN</MenuItem>
+                            </Link>
+                        </>
+                    )}
+                    <Link to='/cart' style={{ textDecoration: 'none', color: 'black' }}>
+                        <MenuItem>
+                            <Badge badgeContent={quantity} color='primary'>
+                                <ShoppingCartOutlined />
+                            </Badge>
+                        </MenuItem>
+                    </Link>
+                </Right>
 
             </Wrapper>
         </Container>

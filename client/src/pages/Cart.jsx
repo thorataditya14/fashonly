@@ -3,12 +3,12 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import styled from 'styled-components';
 import StripeCheckout from 'react-stripe-checkout';
-import { Add, Remove } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { userRequest } from '../requestMethods';
 import { useHistory } from 'react-router';
 import { mobile } from '../responsive';
+import { Link } from 'react-router-dom';
 
 
 const KEY = process.env.REACT_APP_STRIPE;
@@ -24,31 +24,6 @@ const Wrapper = styled.div`
 const Title = styled.h1`
     font-weight: 300;
     text-align: center;
-`;
-
-const Top = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-`;
-
-const TopButton = styled.button`
-    padding: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    border: ${(props) => props.type === 'filled' && 'none'};
-    background-color: ${(props) => props.type === 'filled' ? 'black' : 'transparent'};
-    color: ${(props) => props.type === 'filled' && 'white'};
-`;
-
-const TopTexts = styled.div`
-    ${mobile({ display: 'none' })}
-`;
-const TopText = styled.span`
-    text-decoration: underline;
-    cursor: pointer;
-    margin: 0px 10px;
 `;
 
 const Bottom = styled.div`
@@ -83,18 +58,11 @@ const Details = styled.div`
     justify-content: space-around;
 `;
 
-const ProductName = styled.span``;
-
-const ProductId = styled.span``;
-
-const ProductColor = styled.div`
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: ${(props) => props.color};
+const ProductName = styled.span`
+    font-size: 20px;
+    margin: 5px;
+    ${mobile({ margin: '5px 15px' })}
 `;
-
-const ProductSize = styled.span``;
 
 const PriceDetail = styled.div`
     flex: 1;
@@ -104,14 +72,8 @@ const PriceDetail = styled.div`
     justify-content: center;
 `;
 
-const ProductAmountContainer = styled.div`
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-`;
-
-const ProductAmount = styled.div`
-    font-size: 24px;
+const ProductQuantity = styled.div`
+    font-size: 20px;
     margin: 5px;
     ${mobile({ margin: '5px 15px' })}
 `;
@@ -158,13 +120,22 @@ const Button = styled.button`
     background-color: black;
     color: white;
     font-weight: 600;
+    cursor: pointer;
+    &:disabled {
+        cursor: not-allowed;
+    }
 `;
 
 const Cart = () => {
+    const user = useSelector((state) => state.user.currentUser);
 
     const cart = useSelector((state) => state.cart);
     const [stripeToken, setStripeToken] = useState(null);
     const history = useHistory();
+
+    console.log(cart);
+
+
 
     const onToken = (token) => {
         setStripeToken(token);
@@ -183,25 +154,20 @@ const Cart = () => {
                 });
             } catch { }
         };
-        stripeToken && makeRequest();
-    }, [stripeToken, cart.total, history]);
+        stripeToken && cart.total > 0 && makeRequest();
+    }, [stripeToken, cart, history]);
+
+
+    const handleCheckout = () => {
+        console.log(user);
+    };
 
     return (
         <Container>
-            <Announcement />
             <Navbar />
+            <Announcement />
             <Wrapper>
                 <Title>YOUR BAG</Title>
-{/*
-                <Top>
-                    <TopButton>CONTINUE SHOPPING</TopButton>
-                    <TopTexts>
-                        <TopText>Shopping Bag (2)</TopText>
-                        <TopText>Your Wishlist (0)</TopText>
-                    </TopTexts>
-                    <TopButton type='filled'>CHECKOUT NOW</TopButton>
-                </Top>
-*/}
                 <Bottom>
                     <Info>
                         {cart.products.map((product) => (
@@ -212,21 +178,12 @@ const Cart = () => {
                                         <ProductName>
                                             <b>Product:</b> {product.title}
                                         </ProductName>
-                                        <ProductId>
-                                            <b>ID:</b> {product._id}
-                                        </ProductId>
-                                        <ProductColor color={product.color} />
-                                        <ProductSize>
-                                            <b>Size:</b> {product.size}
-                                        </ProductSize>
+                                        <ProductQuantity>
+                                            <b>Quantity:</b> {product.quantity}
+                                        </ProductQuantity>
                                     </Details>
                                 </ProductDetail>
                                 <PriceDetail>
-                                    <ProductAmountContainer>
-                                        <Add />
-                                        <ProductAmount>{product.quantity}</ProductAmount>
-                                        <Remove />
-                                    </ProductAmountContainer>
                                     <ProductPrice>
                                         $ {product.price * product.quantity}
                                     </ProductPrice>
@@ -263,7 +220,13 @@ const Cart = () => {
                             token={onToken}
                             stripeKey={KEY}
                         >
-                            <Button>CHECKOUT NOW</Button>
+                            {user ? (
+                                <Button disabled={!user} onClick={handleCheckout}>CHECKOUT NOW</Button>
+                            ) : (
+                                <Link to="/login">
+                                    <Button title="Login to checkout" disabled={!user} onClick={handleCheckout}>CHECKOUT NOW</Button>
+                                </Link>
+                            )}
                         </StripeCheckout>
                     </Summary>
                 </Bottom>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@material-ui/icons';
+
 
 const Info = styled.div`
     opacity: 0;
@@ -48,9 +48,9 @@ const Image = styled.img`
 `;
 
 const Icon = styled.div`
-    width: 40px;
+    width: 120px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 40px;
     background-color: white;
     display: flex;
     align-items: center;
@@ -65,25 +65,22 @@ const Icon = styled.div`
 
 
 const Product = ({ item }) => {
-	return (
-		<Container>
-			<Circle />
-			<Image src={item.img} />
-			<Info>
-				<Icon>
-					<ShoppingCartOutlined />
-				</Icon>
-				<Icon>
-					<Link to={`/product/${item._id}`}>
-						<SearchOutlined />
-					</Link>
-				</Icon>
-				<Icon>
-					<FavoriteBorderOutlined />
-				</Icon>
-			</Info>
-		</Container>
-	);
+    return (
+        <Container>
+            <Circle />
+            <Image src={item.img} />
+            <Info>
+                <Icon>
+                    <Link
+                        to={`/product/${item._id}`}
+                        style={{ textDecoration: 'none', color: 'black' }}
+                    >
+                        Go To Item
+                    </Link>
+                </Icon>
+            </Info>
+        </Container>
+    );
 };
 
 

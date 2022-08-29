@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 import { mobile } from '../responsive';
+import { Link } from "react-router-dom";
+import { publicRequest } from '../requestMethods';
+import { useState } from 'react';
 
 
 const Container = styled.div`
     width: 100vw;
     height: 100vh;
     background: linear-gradient(
-            rgba(255, 255, 255, 0.5),
-            rgba(255, 255, 255, 0.5)
-        ),
-        url('https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
-            center;
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.2)
+    ),
+    url('http://nairobiwire.com/wp-content/uploads/2020/02/mageto.jpg') center;
     background-size: cover;
     display: flex;
     align-items: center;
@@ -18,7 +20,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-    width: 40%;
+    width: 30%;
     padding: 20px;
     background-color: white;
     ${mobile({ width: '75%' })}
@@ -53,26 +55,83 @@ const Button = styled.button`
     background-color: teal;
     color: white;
     cursor: pointer;
+    &:disabled {
+        color: green;
+        cursor: not-allowed;
+    }
 `;
 
+
 const Register = () => {
+
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const data = {
+        username,
+        email,
+        password
+    };
+
+
+    const handleSubmit = () => {
+        console.log("sent data");
+        console.log(data);
+        publicRequest.post("/auth/register", data);
+    };
+
+
+
+
+    console.log(
+        username,
+        email,
+        password
+    );
+    console.log(data);
+
     return (
         <Container>
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
-                <Form>
-                    <Input placeholder='name' />
-                    <Input placeholder='last name' />
-                    <Input placeholder='username' />
-                    <Input placeholder='email' />
-                    <Input placeholder='password' />
-                    <Input placeholder='confirm password' />
+                <Form onSubmit={handleSubmit}>
+                    {/* <Input placeholder='name' /> */}
+                    {/* <Input placeholder='last name' /> */}
+                    <Input
+                        type='text'
+                        placeholder='username'
+                        onChange={(e) => setUsername(e.target.value.toLowerCase())}
+                    />
+                    <Input
+                        type='email'
+                        placeholder='email'
+                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                    />
+                    <Input
+                        type='password'
+                        placeholder='password'
+                        onChange={(e) => setPassword(e.target.value.toLowerCase())}
+                    />
+                    <Input
+                        type='password'
+                        placeholder='confirm password'
+                    />
                     <Agreement>
                         By creating an account, I consent to the processing of my personal data in accordance with the
-                        <b>PRIVACY POLICY</b>
+                        <b><u> PRIVACY POLICY </u></b>
                     </Agreement>
-                    <Button>CREATE</Button>
+                    <Button type='submit'>CREATE</Button>
                 </Form>
+                <Link to="/login"
+                    style={{
+                        fontSize: "12px",
+                        color: "black",
+                        cursor: "pointer"
+                    }}
+                >
+                    LOGIN TO ACCOUNT
+                </Link>
             </Wrapper>
         </Container>
     );

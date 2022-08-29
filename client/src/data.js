@@ -1,24 +1,24 @@
 export const sliderItems = [
     {
         id: 1,
-        img: "https://i.ibb.co/cXFnLLV/3.png",
-        title: "SUMMER SALE",
+        img: "https://i.pinimg.com/236x/75/c6/60/75c660b54e0001234112e2dd94e4ad05.jpg",
+        title: "NEW ARRIVALS",
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-        bg: "f5fafd"
+        bg: "fffee6"
     },
     {
         id: 2,
-        img: "https://i.ibb.co/DG69bQ4/2.png",
-        title: "AUTUMN COLLECTION",
+        img: "https://images.bewakoof.com/utter/content/4068/content_Hats-For-Women.jpg",
+        title: "SUMMER SALE",
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-        bg: "fcf1ed"
+        bg: "e6fffd"
     },
     {
         id: 3,
-        img: "https://i.ibb.co/cXFnLLV/3.png",
-        title: "LOUNGEWEAR LOVE",
+        img: "https://cdn.cliqueinc.com/posts/282839/autumn-clothes-women-2019-282839-1570024088358-image.700x0c.jpg",
+        title: "AUTUMN COLLECTION",
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-        bg: "fbf0f4"
+        bg: "ffece6"
     }
 ];
 
@@ -26,21 +26,21 @@ export const sliderItems = [
 export const categories = [
     {
         id: 1,
-        img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        title: "SHIRT STYLE!",
-        cat: "women"
+        img: "https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/2032833/2022/6/8/2b5f01b6-0b84-48ff-8512-e7e9ef377c3e1654681214665-WROGN-Men-Blue-Slim-Fit-Mid-Rise-Clean-Look-Stretchable-Jean-1.jpg",
+        title: "COMFORATABLE JEANS",
+        cat: "jeans"
     },
     {
         id: 2,
-        img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        title: "LOUNGEWEAR LOVE",
-        cat: "coat"
+        img: "https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/1376577/2022/6/3/ea10ab6c-883e-437a-8780-ed87484393f81654235830793-Roadster-Men-Black--Grey-Checked-Casual-Sustainable-Shirt-42-1.jpg",
+        title: "STYLISH SHIRTS",
+        cat: "shirt"
     },
     {
         id: 3,
-        img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+        img: "https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/12279416/2020/10/23/81c941d5-3bd0-48fa-835a-632353235fc51603434085601-Roadster-Women-Jackets-4691603434083309-1.jpg",
         title: "LIGHT JACKETS",
-        cat: "jeans"
+        cat: "jacket"
     }
 ];
 

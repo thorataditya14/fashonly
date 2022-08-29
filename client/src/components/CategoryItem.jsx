@@ -30,17 +30,21 @@ const Info = styled.div`
 `;
 
 const Title = styled.h1`
-    color:white;
+    color: white;
     margin-bottom: 20px;
 `;
 
 const Button = styled.button`
-    border:none;
+    border: 1px solid gray;
     padding: 10px;
     background-color: white;
-    color:gray;
+    color: gray;
     cursor: pointer;
     font-weight: 600;
+    &:hover {
+        background-color: black;
+        color: white;
+    }
 `;
 
 

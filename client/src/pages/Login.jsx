@@ -1,19 +1,19 @@
 import styled from 'styled-components';
-import { login } from '../redux/apiCalls';
 import { mobile } from '../responsive';
 import { useState } from 'react';
+import { login } from '../redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
 
 
 const Container = styled.div`
     width: 100vw;
     height: 100vh;
     background: linear-gradient(
-            rgba(255, 255, 255, 0.5),
-            rgba(255, 255, 255, 0.5)
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0.2)
         ),
-        url('https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
-            center;
+        url('http://nairobiwire.com/wp-content/uploads/2020/02/mageto.jpg') center;
     background-size: cover;
     display: flex;
     align-items: center;
@@ -59,16 +59,10 @@ const Button = styled.button`
     }
 `;
 
-const Link = styled.a`
-    margin: 5px 0px;
-    font-size: 12px;
-    text-decoration: underline;
-    cursor: pointer;
-`;
-
 const Error = styled.span`
     color: red;
 `;
+
 
 const Login = () => {
 
@@ -82,6 +76,9 @@ const Login = () => {
         login(dispatch, { username, password });
     };
 
+    console.log(error)
+
+    
     return (
         <Container>
             <Wrapper>
@@ -98,8 +95,15 @@ const Login = () => {
                     />
                     <Button onClick={handleClick} disabled={isFetching}>LOGIN</Button>
                     {error && <Error>Something went wrong...</Error>}
-                    <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-                    <Link>CREATE A NEW ACCOUNT</Link>
+                    <Link to="/register"
+                        style={{
+                            fontSize: "12px",
+                            color: "black",
+                            cursor: "pointer"
+                        }}
+                    >
+                        CREATE NEW ACCOUNT
+                    </Link>
                 </Form>
             </Wrapper>
         </Container>

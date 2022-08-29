@@ -87,4 +87,34 @@ router.get("/", async (req, res) => {
 });
 
 
+// Get All Product
+router.get("/search", async (req, res) => {
+    // q ? res.json(search(Users).slice(0, 10)) : res.json(Users.slice(0, 10));
+
+    const query = req.query.q;
+    try {
+        let products;
+
+        if (query) {
+            products = await Product.find({
+
+                $or: [{
+                //     title: { $regex: query }
+                // }, {
+                    categories: { $in: [query] }
+                }, {
+                    color: { $in: [query] }
+                }]
+            });
+        }
+        // else {
+        //     products = await Product.find();
+        // }
+        res.status(200).json(products);
+    }
+    catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 module.exports = router;
