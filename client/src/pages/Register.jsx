@@ -74,30 +74,19 @@ const Register = () => {
         password
     };
 
-
     const handleSubmit = () => {
-        console.log("sent data");
-        console.log(data);
-        publicRequest.post("/auth/register", data);
+        try {
+            publicRequest.post("/auth/register", data);
+        } catch (err) {
+            console.log(err)
+        }
     };
-
-
-
-
-    console.log(
-        username,
-        email,
-        password
-    );
-    console.log(data);
 
     return (
         <Container>
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
                 <Form onSubmit={handleSubmit}>
-                    {/* <Input placeholder='name' /> */}
-                    {/* <Input placeholder='last name' /> */}
                     <Input
                         type='text'
                         placeholder='username'
