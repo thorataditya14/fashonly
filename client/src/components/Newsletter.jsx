@@ -45,6 +45,13 @@ const Button = styled.button`
     border: none;
     background-color: teal;
     color: white;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    &:hover {
+        opacity: 1;
+        transform: scale(1.1)
+    }
 `;
 
 const Newsletter = () => {

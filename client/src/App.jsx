@@ -1,10 +1,12 @@
 import Home from './pages/Home';
+import AllProducts from './pages/AllProducts';
 import ProductList from './pages/ProductList';
 import Product from './pages/Product';
 import Cart from './pages/Cart';
 import Success from './pages/Success';
 import Login from './pages/Login';
 import Register from './pages/Register';
+
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -19,6 +21,10 @@ const App = () => {
 
                 <Route exact path='/'>
                     <Home />
+                </Route>
+
+                <Route path='/products'>
+                    <AllProducts />
                 </Route>
 
                 <Route path='/products/:category'>

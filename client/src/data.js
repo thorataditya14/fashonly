@@ -15,6 +15,13 @@ export const sliderItems = [
     },
     {
         id: 3,
+        img: "https://cdn2.storyasset.link/H4tpMcVwKAO7pxKX0IUdWJRXln93/123-ms-vvsbqvjtpj.png",
+        title: "WINTER WEAR",
+        desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+        bg: "e6fffd"
+    },
+    {
+        id: 4,
         img: "https://cdn.cliqueinc.com/posts/282839/autumn-clothes-women-2019-282839-1570024088358-image.700x0c.jpg",
         title: "AUTUMN COLLECTION",
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
@@ -37,10 +44,16 @@ export const categories = [
         cat: "shirt"
     },
     {
-        id: 3,
+        id: 4,
         img: "https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/12279416/2020/10/23/81c941d5-3bd0-48fa-835a-632353235fc51603434085601-Roadster-Women-Jackets-4691603434083309-1.jpg",
         title: "LIGHT JACKETS",
         cat: "jacket"
+    },
+    {
+        id: 4,
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS9OcwPGdFx23Wj6YbS4U7iL5nnzg0NO2bMKY1-h0RIC-WgdCY8FvUdVbzeH7ywEezXB0&usqp=CAU",
+        title: "INDIAN TRADITIONALS",
+        cat: "traditional"
     }
 ];
 

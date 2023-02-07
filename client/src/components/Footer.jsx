@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { mobile } from '../responsive';
 import { Facebook, Instagram, MailOutline, Phone, Pinterest, Room, Twitter } from '@material-ui/icons';
 
 
 const Container = styled.div`
+    height: 260px;
     display: flex;
     ${mobile({ flexDirection: 'column' })}
 `;
@@ -106,30 +108,33 @@ const Footer = () => {
             <Center>
                 <Title>Useful Links</Title>
                 <List>
-                    <ListItem>Home</ListItem>
-                    <ListItem>Cart</ListItem>
-                    <ListItem>Man Fashion</ListItem>
-                    <ListItem>Woman Fashion</ListItem>
-                    <ListItem>Accessories</ListItem>
-                    <ListItem>My Account</ListItem>
-                    <ListItem>Order Tracking</ListItem>
-                    <ListItem>Wishlist</ListItem>
-                    <ListItem>Wishlist</ListItem>
-                    <ListItem>Terms</ListItem>
+                    <ListItem><Link style={{ color: "black" }} to={"/"}>Home</Link></ListItem>
+                    <ListItem><Link style={{ color: "black" }} to={"/cart"}>Cart</Link></ListItem>
+                    <ListItem><Link style={{ color: "black" }} to={"/products/men"}>Men Fashion</Link></ListItem>
+                    <ListItem><Link style={{ color: "black" }} to={"/products/women"}>Women Fashion</Link></ListItem>
+                    <ListItem><Link style={{ color: "black" }} to={"/products/kids"}>Kids Fashion</Link></ListItem>
+                    <ListItem><Link style={{ color: "black" }} to={"/products/traditional"}>Traditional</Link></ListItem>
+                    <ListItem><Link style={{ color: "black" }} to={"/products/casual"}>Casuals</Link></ListItem>
+                    <ListItem><Link style={{ color: "black" }} to={"/products/formal"}>Formals</Link></ListItem>
+                    <ListItem><Link style={{ color: "black" }} to={"/"}>My Account</Link></ListItem>
+                    <ListItem><Link style={{ color: "black" }} to={"/"}>Terms</Link></ListItem>
+                    {/* <ListItem>Accessories</ListItem> */}
+                    {/* <ListItem>Order Tracking</ListItem> */}
+                    {/* <ListItem>Wishlist</ListItem> */}
                 </List>
             </Center>
             <Right>
                 <Title>Contact</Title>
                 <ContactItem>
-                    <Room style={{ marginRight: '10px' }}/> 987 Some Street, Some City 123456
+                    <Room style={{ marginRight: '10px' }} /> 987 Some Street, Some City 123456
                 </ContactItem>
                 <ContactItem>
-                    <Phone style={{ marginRight: '10px' }}/> +12 345 678 9012
+                    <Phone style={{ marginRight: '10px' }} /> +12 345 678 9012
                 </ContactItem>
                 <ContactItem>
-                    <MailOutline style={{ marginRight: '10px' }}/> contact@fashonly.com
+                    <MailOutline style={{ marginRight: '10px' }} /> contact@fashonly.com
                 </ContactItem>
-                <Payment src='https://i.ibb.co/Qfvn4z6/payment.png'/>
+                <Payment src='https://i.ibb.co/Qfvn4z6/payment.png' />
             </Right>
         </Container>
     );

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons';
 import { useState } from 'react';
 import { sliderItems } from '../data';
@@ -91,10 +92,10 @@ const Slider = () => {
     const [slideIndex, setSlideIndex] = useState(0);
     const handleClick = (direction) => {
         if (direction === 'left') {
-            setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
+            setSlideIndex(slideIndex > 0 ? slideIndex - 1 : sliderItems.length - 1);
         }
         else {
-            setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+            setSlideIndex(slideIndex < sliderItems.length - 1 ? slideIndex + 1 : 0);
         }
     };
 
@@ -112,7 +113,13 @@ const Slider = () => {
                         <InfoContainer>
                             <Title>{item.title}</Title>
                             <Desc>{item.desc}</Desc>
-                            <Button>SHOW NOW</Button>
+
+                            <Link
+                                to={`/products`}
+                            >
+                                <Button>SHOP NOW</Button>
+                            </Link>
+
                         </InfoContainer>
                     </Slide>
                 ))}

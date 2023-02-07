@@ -100,6 +100,11 @@ const MenuItem = styled.div`
     ${mobile({ fontSize: '12px', marginLeft: '10px' })}
 `;
 
+const Username = styled.div`
+    font-size: 14px;
+    margin-left: 25px;
+    ${mobile({ fontSize: '12px', marginLeft: '10px' })}
+`;
 
 const Navbar = () => {
     const quantity = useSelector((state) => state.cart.quantity);
@@ -129,7 +134,7 @@ const Navbar = () => {
 
 
     return (
-        <Container>
+        <Container id='navbar'>
             <Wrapper>
 
                 <Left>
@@ -161,13 +166,18 @@ const Navbar = () => {
 
                 <Right>
                     {user ? (
-                        <Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>
-                            <MenuItem
-                                onClick={handleClick}
-                            >
-                                LOG OUT
-                            </MenuItem>
-                        </Link>
+                        <>
+                            <Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>
+                                <MenuItem
+                                    onClick={handleClick}
+                                >
+                                    Logout
+                                </MenuItem>
+                            </Link>
+                            <Username>
+                                <b>Hello! {user.username}</b>
+                            </Username>
+                        </>
                     ) : (
                         <>
                             <Link to='/register' style={{ textDecoration: 'none', color: 'black' }}>

@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import Announcement from '../components/Announcement';
 import { mobile } from '../responsive';
 import { Link } from "react-router-dom";
 import { publicRequest } from '../requestMethods';
@@ -7,13 +10,14 @@ import { useState } from 'react';
 
 const Container = styled.div`
     width: 100vw;
-    height: 100vh;
-    background: linear-gradient(
-        rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 0.2)
-    ),
-    url('http://nairobiwire.com/wp-content/uploads/2020/02/mageto.jpg') center;
-    background-size: cover;
+    height: calc(100vh - 60px - 30px - 260px);
+    background-color: #fcf5f5;
+    // background: linear-gradient(
+    //     rgba(255, 255, 255, 0),
+    //     rgba(255, 255, 255, 0.2)
+    // ),
+    // url('http://nairobiwire.com/wp-content/uploads/2020/02/mageto.jpg') center;
+    // background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,6 +27,8 @@ const Wrapper = styled.div`
     width: 30%;
     padding: 20px;
     background-color: white;
+    border: 1px solid lightgray;
+    box-shadow: 5px 5px 10px 5px lightgray;
     ${mobile({ width: '75%' })}
 `;
 
@@ -34,6 +40,7 @@ const Title = styled.h1`
 const Form = styled.form`
     display: flex;
     flex-wrap: wrap;
+    margin: 10px auto;
 `;
 
 const Input = styled.input`
@@ -55,11 +62,15 @@ const Button = styled.button`
     background-color: teal;
     color: white;
     cursor: pointer;
+    &:hover {
+        box-shadow: 5px 5px 10px 5px lightgray;
+    }
     &:disabled {
         color: green;
         cursor: not-allowed;
     }
 `;
+
 
 
 const Register = () => {
@@ -83,46 +94,51 @@ const Register = () => {
     };
 
     return (
-        <Container>
-            <Wrapper>
-                <Title>CREATE AN ACCOUNT</Title>
-                <Form onSubmit={handleSubmit}>
-                    <Input
-                        type='text'
-                        placeholder='username'
-                        onChange={(e) => setUsername(e.target.value.toLowerCase())}
-                    />
-                    <Input
-                        type='email'
-                        placeholder='email'
-                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                    />
-                    <Input
-                        type='password'
-                        placeholder='password'
-                        onChange={(e) => setPassword(e.target.value.toLowerCase())}
-                    />
-                    <Input
-                        type='password'
-                        placeholder='confirm password'
-                    />
-                    <Agreement>
-                        By creating an account, I consent to the processing of my personal data in accordance with the
-                        <b><u> PRIVACY POLICY </u></b>
-                    </Agreement>
-                    <Button type='submit'>CREATE</Button>
-                </Form>
-                <Link to="/login"
-                    style={{
-                        fontSize: "12px",
-                        color: "black",
-                        cursor: "pointer"
-                    }}
-                >
-                    LOGIN TO ACCOUNT
-                </Link>
-            </Wrapper>
-        </Container>
+        <>
+            <Navbar />
+            <Announcement />
+            <Container>
+                <Wrapper>
+                    <Title>CREATE AN ACCOUNT</Title>
+                    <Form onSubmit={handleSubmit}>
+                        <Input
+                            type='text'
+                            placeholder='username'
+                            onChange={(e) => setUsername(e.target.value.toLowerCase())}
+                        />
+                        <Input
+                            type='email'
+                            placeholder='email'
+                            onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                        />
+                        <Input
+                            type='password'
+                            placeholder='password'
+                            onChange={(e) => setPassword(e.target.value.toLowerCase())}
+                        />
+                        <Input
+                            type='password'
+                            placeholder='confirm password'
+                        />
+                        <Agreement>
+                            By creating an account, I consent to the processing of my personal data in accordance with the
+                            <b><u> PRIVACY POLICY </u></b>
+                        </Agreement>
+                        <Button type='submit'>CREATE</Button>
+                    </Form>
+                    <Link to="/login"
+                        style={{
+                            fontSize: "12px",
+                            color: "black",
+                            cursor: "pointer"
+                        }}
+                    >
+                        LOGIN TO ACCOUNT
+                    </Link>
+                </Wrapper>
+            </Container>
+            <Footer />
+        </>
     );
 };
 

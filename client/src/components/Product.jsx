@@ -21,9 +21,10 @@ const Info = styled.div`
 const Container = styled.div`
     flex: 1;
     margin: 5px;
-    min-width: 280px;
+    min-width: 240px;
     height: 350px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #f5fbfd;
@@ -43,9 +44,15 @@ const Circle = styled.div`
 `;
 
 const Image = styled.img`
-    height: 75%;
+    height: 70%;
     z-index: 2;
 `;
+
+const Name = styled.div`
+    margin: 0;
+    margin-top: 10px;
+`;
+
 
 const Icon = styled.div`
     width: 120px;
@@ -66,20 +73,23 @@ const Icon = styled.div`
 
 const Product = ({ item }) => {
     return (
-        <Container>
-            <Circle />
-            <Image src={item.img} />
-            <Info>
-                <Icon>
-                    <Link
-                        to={`/product/${item._id}`}
-                        style={{ textDecoration: 'none', color: 'black' }}
-                    >
-                        Go To Item
-                    </Link>
-                </Icon>
-            </Info>
-        </Container>
+        <>
+            <Container>
+                <Circle />
+                <Image src={item.img} />
+                <Info>
+                    <Icon>
+                        <Link
+                            to={`/product/${item._id}`}
+                            style={{ textDecoration: 'none', color: 'black' }}
+                        >
+                            Go To Item
+                        </Link>
+                    </Icon>
+                </Info>
+                <Name>{item.title}</Name>
+            </Container>
+        </>
     );
 };
 

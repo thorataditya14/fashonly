@@ -9,14 +9,27 @@ import { userRequest } from '../requestMethods';
 import { useHistory } from 'react-router';
 import { mobile } from '../responsive';
 import { Link } from 'react-router-dom';
+import {
+    addProduct,
+    incrementQuantity,
+    decrementQuantity,
+    removeProduct
+} from '../redux/cartRedux';
+import { useDispatch } from 'react-redux';
+import { Add, Remove } from '@material-ui/icons';
 
 
-const KEY = process.env.REACT_APP_STRIPE;
+require('dotenv').config()
+// const KEY = process.env.REACT_APP_STRIPE;
 
+const REACT_APP_STRIPE = "pk_test_51LOZ9gSIYvwKDxCaYp3Aapu4MGbCmlBglBNtKCZB9INze0caSW5gKeDTL8lHfTUjY9rT7s67c32e2giVid3IPj5K0042HoWigq"
+const KEY = REACT_APP_STRIPE;
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
+    width: 95%;
+    margin: auto;
     padding: 20px;
     ${mobile({ padding: '10px' })}
 `;
@@ -29,42 +42,62 @@ const Title = styled.h1`
 const Bottom = styled.div`
     display: flex;
     justify-content: space-between;
+    gap: 30px;
     ${mobile({ flexDirection: 'column' })}
 `;
 
 const Info = styled.div`
     flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 `;
 
 const Product = styled.div`
+border: 1px solid lightgray;
+padding: 10px;
+height: 150px;
+margin: 10px 5px;
     display: flex;
     justify-content: space-between;
     ${mobile({ flexDirection: 'column' })}
 `;
 
 const ProductDetail = styled.div`
-    flex: 2;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex: 2;
+`;
+
+const ImgContainer = styled.div`
+    width: 120px;
+    height: 150px
+    flex: 1;
 `;
 
 const Image = styled.img`
-    width: 200px;
+    max-width: 120px;
+    max-height: 150px
 `;
 
 const Details = styled.div`
-    padding: 20px;
+    padding: auto 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
+    flex: 2;
 `;
 
 const ProductName = styled.span`
     font-size: 20px;
-    margin: 5px;
+    margin: 20px 5px;
     ${mobile({ margin: '5px 15px' })}
 `;
 
 const PriceDetail = styled.div`
+    margin: 20px 5px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -72,13 +105,20 @@ const PriceDetail = styled.div`
     justify-content: center;
 `;
 
-const ProductQuantity = styled.div`
+const ProductPrice = styled.div`
     font-size: 20px;
     margin: 5px;
     ${mobile({ margin: '5px 15px' })}
 `;
 
-const ProductPrice = styled.div`
+const ProductQuantity = styled.div`
+    font-size: 20px;
+    margin: 5px;
+    padding: 0;
+    ${mobile({ margin: '5px 15px' })}
+`;
+
+const ProductTotal = styled.div`
     font-size: 30px;
     font-weight: 200;
     ${mobile({ marginBottom: '20px' })}
@@ -94,8 +134,11 @@ const Summary = styled.div`
     flex: 1;
     border: 0.5px solid lightgray;
     border-radius: 10px;
+    margin: 10px 5px;
     padding: 20px;
-    height: 50vh;
+    height: 45vh;
+    position: sticky;
+    top: 77px;
 `;
 
 const SummaryTitle = styled.h1`
@@ -126,8 +169,32 @@ const Button = styled.button`
     }
 `;
 
+const ProductButton = styled.button`
+    padding: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+        transform: scale(1.1);
+    }
+`;
+
+const RemoveButton = styled.button`
+    padding: 10px;
+    background-color: transparent;
+    border: none;
+    margin-top: 25px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+`;
+
 const Cart = () => {
     const user = useSelector((state) => state.user.currentUser);
+    const dispatch = useDispatch();
 
     const cart = useSelector((state) => state.cart);
     const [stripeToken, setStripeToken] = useState(null);
@@ -135,7 +202,13 @@ const Cart = () => {
 
     console.log(cart);
 
-
+    const getTotalAmount = () => {
+        var total = 0
+        cart.products.forEach(item => {
+            total += item.quantity * item.price
+        })
+        return total
+    }
 
     const onToken = (token) => {
         setStripeToken(token);
@@ -145,7 +218,7 @@ const Cart = () => {
         const makeRequest = async () => {
             try {
                 const res = await userRequest.post('/checkout/payment', {
-                    tokenId: stripeToken.id,
+                    tokenId: stripeToken._id,
                     amount: 500,
                 });
                 history.push('/success', {
@@ -154,13 +227,14 @@ const Cart = () => {
                 });
             } catch { }
         };
-        stripeToken && cart.total > 0 && makeRequest();
+        stripeToken && getTotalAmount() > 0 && makeRequest();
     }, [stripeToken, cart, history]);
 
 
     const handleCheckout = () => {
         console.log(user);
     };
+
 
     return (
         <Container>
@@ -173,20 +247,37 @@ const Cart = () => {
                         {cart.products.map((product) => (
                             <Product>
                                 <ProductDetail>
-                                    <Image src={product.img} />
+                                    <ImgContainer>
+                                        <Image src={product.img} />
+                                    </ImgContainer>
                                     <Details>
                                         <ProductName>
                                             <b>Product:</b> {product.title}
                                         </ProductName>
+                                        <ProductPrice>
+                                            <b>Price:</b> {product.price} INR
+                                        </ProductPrice>
                                         <ProductQuantity>
-                                            <b>Quantity:</b> {product.quantity}
+                                            <b>Quantity:</b>
+                                            <ProductButton onClick={() => dispatch(incrementQuantity(product._id))}>
+                                                +
+                                            </ProductButton>
+                                            {"\t"}{product.quantity}{"\t"}
+                                            <ProductButton onClick={() => dispatch(decrementQuantity(product._id))}>
+                                                -
+                                            </ProductButton>
+                                            <RemoveButton onClick={() => dispatch(removeProduct(product._id))}>
+                                                Remove from Cart
+                                            </RemoveButton>
                                         </ProductQuantity>
                                     </Details>
                                 </ProductDetail>
                                 <PriceDetail>
-                                    <ProductPrice>
-                                        $ {product.price * product.quantity}
-                                    </ProductPrice>
+                                    <ProductTotal>
+                                        Product Total
+                                        <br />
+                                        {product.price * product.quantity} INR
+                                    </ProductTotal>
                                 </PriceDetail>
                             </Product>
                         ))}
@@ -196,27 +287,27 @@ const Cart = () => {
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+                            <SummaryItemPrice>{getTotalAmount()} INR</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Estimated Shipping</SummaryItemText>
-                            <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+                            <SummaryItemPrice>5.90 INR</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Shipping Discount</SummaryItemText>
-                            <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+                            <SummaryItemPrice>-5.90 INR</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem type='total'>
                             <SummaryItemText>Total</SummaryItemText>
-                            <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+                            <SummaryItemPrice>{getTotalAmount()} INR</SummaryItemPrice>
                         </SummaryItem>
                         <StripeCheckout
                             name='Fashonly Shop'
                             image='https://cdn-icons-png.flaticon.com/512/263/263142.png'
                             billingAddress
                             shippingAddress
-                            description={`Your total is $${cart.total}`}
-                            amount={cart.total * 100}
+                            description={`Your total is $${getTotalAmount()}`}
+                            amount={getTotalAmount() * 100}
                             token={onToken}
                             stripeKey={KEY}
                         >
@@ -224,7 +315,7 @@ const Cart = () => {
                                 <Button disabled={!user} onClick={handleCheckout}>CHECKOUT NOW</Button>
                             ) : (
                                 <Link to="/login">
-                                    <Button title="Login to checkout" disabled={!user} onClick={handleCheckout}>CHECKOUT NOW</Button>
+                                    <Button title="Login to checkout" disabled={!user} onClick={handleCheckout} >CHECKOUT NOW</Button>
                                 </Link>
                             )}
                         </StripeCheckout>
