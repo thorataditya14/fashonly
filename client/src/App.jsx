@@ -23,7 +23,7 @@ const App = () => {
                     <Home />
                 </Route>
 
-                <Route path='/products'>
+                <Route exact path='/products'>
                     <AllProducts />
                 </Route>
 

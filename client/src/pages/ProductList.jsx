@@ -12,7 +12,9 @@ import { useState } from 'react';
 const Container = styled.div``;
 
 const Title = styled.h1`
-    margin: 20px;
+    margin: 10px;
+    margin-top: 30px;
+    text-align: center;
 `;
 
 const FilterContainer = styled.div`
@@ -40,6 +42,17 @@ const Select = styled.select`
 
 const Option = styled.option``;
 
+const Button = styled.button`
+    padding: 10px;
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+`;
+
 const ProductList = () => {
 
     const location = useLocation();
@@ -59,12 +72,12 @@ const ProductList = () => {
         <Container>
             <Navbar />
             <Announcement />
-            <Title>{cat}</Title>
+            <Title>{cat.toUpperCase()}</Title>
             <FilterContainer>
                 <Filter>
                     <FilterText>Filter Products:</FilterText>
                     <Select name='color' onChange={handleFilters}>
-                        <Option disabled>Color</Option>
+                        <Option selected disabled>Color</Option>
                         <Option>white</Option>
                         <Option>black</Option>
                         <Option>red</Option>
@@ -73,13 +86,14 @@ const ProductList = () => {
                         <Option>green</Option>
                     </Select>
                     <Select name='size' onChange={handleFilters}>
-                        <Option disabled>Size</Option>
+                        <Option selected disabled>Size</Option>
                         <Option>XS</Option>
                         <Option>S</Option>
                         <Option>M</Option>
                         <Option>L</Option>
                         <Option>XL</Option>
                     </Select>
+                    <Button onClick={() => window.location.reload(false)}>Clear Filters</Button>
                 </Filter>
                 <Filter>
                     <FilterText>Sort Products:</FilterText>

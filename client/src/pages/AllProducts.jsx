@@ -1,18 +1,20 @@
 import Announcement from '../components/Announcement';
+import Product from '../components/Product';
 import Navbar from '../components/Navbar';
-import Products from '../components/Products';
 import Newsletter from '../components/Newsletter';
 import Footer from '../components/Footer';
 import styled from 'styled-components';
 import { mobile } from '../responsive';
-import { useLocation } from 'react-router';
-import { useState } from 'react';
+import { useEffect, useState } from "react";
+import { publicRequest } from '../requestMethods';
 
 
 const Container = styled.div``;
 
 const Title = styled.h1`
-    margin: 20px;
+    margin: 10px;
+    margin-top: 30px;
+    text-align: center;
 `;
 
 const FilterContainer = styled.div`
@@ -40,7 +42,6 @@ const Select = styled.select`
 
 const Option = styled.option``;
 
-
 const Button = styled.button`
     padding: 10px;
     font-size: 18px;
@@ -52,11 +53,7 @@ const Button = styled.button`
     }
 `;
 
-
-const AllProducts = () => {
-
-    const location = useLocation();
-    const cat = location.pathname.split('/')[2];
+const ProductList = () => {
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState('newest');
 
@@ -72,7 +69,7 @@ const AllProducts = () => {
         <Container>
             <Navbar />
             <Announcement />
-            <Title>{cat ? cat.toUpperCase() : "ALL PRODUCTS"}</Title>
+            <Title>ALL CLOTHES</Title>
             <FilterContainer>
                 <Filter>
                     <FilterText>Filter Products:</FilterText>
@@ -104,11 +101,7 @@ const AllProducts = () => {
                     </Select>
                 </Filter>
             </FilterContainer>
-
-            {cat ?
-                <Products cat={cat} filters={filters} sort={sort} />
-                : <Products filters={filters} sort={sort} />}
-
+            <Products filters={filters} sort={sort} />
             <Newsletter />
             <Footer />
         </Container>
@@ -116,4 +109,79 @@ const AllProducts = () => {
 };
 
 
-export default AllProducts;
+const ProductContainer = styled.div`
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+`;
+
+
+const Products = ({ filters, sort, limit }) => {
+
+    const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+
+    useEffect(() => {
+        const getProducts = async () => {
+            try {
+                const res = await publicRequest.get("/products");
+                setProducts(res.data);
+            } catch (err) { }
+        };
+        getProducts();
+    }, []);
+
+
+    useEffect(() => {
+        setFilteredProducts(
+            products.filter((item) =>
+                Object.entries(filters).every(([key, value]) =>
+                    item[key].includes(value)
+                )
+            )
+        );
+    }, [products, filters]);
+
+    useEffect(() => {
+        if (sort === "newest") {
+            setFilteredProducts((prev) =>
+                [...prev].sort((a, b) => a.createdAt - b.createdAt)
+            );
+        }
+        else if (sort === "asc") {
+            setFilteredProducts((prev) =>
+                [...prev].sort((a, b) => a.price - b.price)
+            );
+        }
+        else {
+            setFilteredProducts((prev) =>
+                [...prev].sort((a, b) => b.price - a.price)
+            );
+        }
+    }, [sort]);
+
+    return (
+        <ProductContainer>
+            {1
+                ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
+                : products
+                    .slice(0, limit)
+                    .map((item) => <Product item={item} key={item.id} />)}
+        </ProductContainer>
+    );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+export default ProductList;
