@@ -38,6 +38,7 @@ const Select = styled.select`
     padding: 10px;
     margin-right: 20px;
     ${mobile({ margin: '10px 0px' })}
+    cursor: pointer;
 `;
 
 const Option = styled.option``;

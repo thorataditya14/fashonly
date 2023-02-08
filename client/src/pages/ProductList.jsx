@@ -37,6 +37,7 @@ const FilterText = styled.span`
 const Select = styled.select`
     padding: 10px;
     margin-right: 20px;
+    cursor: pointer;
     ${mobile({ margin: '10px 0px' })}
 `;
 
