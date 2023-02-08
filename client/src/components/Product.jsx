@@ -41,10 +41,11 @@ const Circle = styled.div`
     border-radius: 50%;
     background-color: white;
     position: absolute;
+    top: 20px
 `;
 
 const Image = styled.img`
-    height: 70%;
+    height: 65%;
     z-index: 2;
 `;
 
@@ -52,7 +53,6 @@ const Name = styled.div`
     margin: 0;
     margin-top: 10px;
 `;
-
 
 const Icon = styled.div`
     width: 120px;
@@ -70,6 +70,48 @@ const Icon = styled.div`
     }
 `;
 
+const Price = styled.div`
+    margin-top: 5px;
+`;
+
+const Superscript = styled.span`
+    font-size: 12px;
+    margin: auto 5px auto 2px;
+`;
+
+const Discount = styled.span`
+    font-size: 12px;
+    margin: auto 5px auto 2px;
+`;
+
+const StrikeThrough = styled.s`
+    font-size: 12px;
+    margin: auto 5px auto 2px;
+`;
+
+const ColorContainer = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+margin-top: 15px;
+    // width: 20px;
+    // height: 20px;
+    // border-radius: 50%;
+    // border: 1px solid grey;
+    // background-color: ${(props) => props.color};
+    // cursor: pointer;
+`;
+
+const ColorCircle = styled.div`
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid grey;
+    background-color: ${(props) => props.color};
+    margin: 0px 5px;
+    cursor: pointer;
+`;
+
 
 const Product = ({ item }) => {
     return (
@@ -77,17 +119,30 @@ const Product = ({ item }) => {
             <Container>
                 <Circle />
                 <Image src={item.img} />
-                <Info>
-                    <Icon>
-                        <Link
-                            to={`/product/${item._id}`}
-                            style={{ textDecoration: 'none', color: 'black' }}
-                        >
+                <Link
+                    to={`/product/${item._id}`}
+                    style={{ textDecoration: 'none', color: 'black' }}
+                >
+                    <Info>
+                        <Icon>
                             Go To Item
-                        </Link>
-                    </Icon>
-                </Info>
+                        </Icon>
+                    </Info>
+                </Link>
+                <ColorContainer>
+                    {item.color?.map((c) => (
+                        <ColorCircle color={c} key={c} />
+                    ))}
+                </ColorContainer>
                 <Name>{item.title}</Name>
+                <Price>
+                    {item.price * 0.9}
+                    <Superscript>INR {"\t\t"}</Superscript>
+                    <Discount>
+                        <StrikeThrough>{item.price} INR</StrikeThrough>
+                        {"\t\t"}(10% off)
+                    </Discount>
+                </Price>
             </Container>
         </>
     );

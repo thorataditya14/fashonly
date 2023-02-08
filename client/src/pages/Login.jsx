@@ -2,17 +2,20 @@ import styled from 'styled-components';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Announcement from '../components/Announcement';
+import Newsletter from '../components/Newsletter';
 import { mobile } from '../responsive';
 import { useState } from 'react';
 import { login } from '../redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
+import { ArrowBack } from '@material-ui/icons';
 
 
 const Container = styled.div`
-    width: 100vw;
-    height: calc(100vh - 60px - 30px - 260px);
-    background-color: #fcf5f5;
+    // width: 100vw;
+    // height: calc(100vh - 60px - 30px - 260px);
+    height: 80vh;
+    // background-color: #fcf5f5;
     // background: linear-gradient(
     //         rgba(255, 255, 255, 0),
     //         rgba(255, 255, 255, 0.2)
@@ -26,16 +29,20 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
     width: 25%;
+    width: 400px;
+
     padding: 20px;
     background-color: white;
     border: 1px solid lightgray;
     box-shadow: 5px 5px 10px 5px lightgray;
     ${mobile({ width: '75%' })}
+    // background-color: #f5fbfd;
 `;
 
 const Title = styled.h1`
     font-size: 24px;
     font-weight: 300;
+    margin-top: 10px;
 `;
 
 const Form = styled.form`
@@ -95,6 +102,17 @@ const Login = () => {
             <Announcement />
             <Container>
                 <Wrapper>
+                    <Link to="/"
+                        style={{
+                            fontSize: "15px",
+                            color: "black",
+                            cursor: "pointer",
+                            textDecoration: "none"
+                        }}
+                    >
+                        <ArrowBack style={{fontSize: "10px"}} />
+                        {"\t\t"} Back to Home
+                    </Link>
                     <Title>SIGN IN</Title>
                     <Form>
                         <Input
@@ -120,6 +138,7 @@ const Login = () => {
                     </Form>
                 </Wrapper>
             </Container>
+            <Newsletter />
             <Footer />
         </>
     );

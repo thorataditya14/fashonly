@@ -27,8 +27,8 @@ const ImgContainer = styled.div`
 `;
 
 const Image = styled.img`
-    max-width: 90%;
-    max-height: 90%;
+    width: 390px;
+    height: 520px;
     object-fit: cover;
     ${mobile({ height: '40vh' })}
 `;

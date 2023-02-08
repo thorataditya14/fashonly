@@ -2,16 +2,19 @@ import styled from 'styled-components';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Announcement from '../components/Announcement';
+import Newsletter from '../components/Newsletter';
 import { mobile } from '../responsive';
 import { Link } from "react-router-dom";
 import { publicRequest } from '../requestMethods';
 import { useState } from 'react';
+import { ArrowBack } from '@material-ui/icons';
 
 
 const Container = styled.div`
-    width: 100vw;
-    height: calc(100vh - 60px - 30px - 260px);
-    background-color: #fcf5f5;
+    // width: 100vw;
+    // height: calc(100vh - 60px - 30px - 260px);
+    height: 80vh;
+    // background-color: #f5fbfd;
     // background: linear-gradient(
     //     rgba(255, 255, 255, 0),
     //     rgba(255, 255, 255, 0.2)
@@ -30,11 +33,13 @@ const Wrapper = styled.div`
     border: 1px solid lightgray;
     box-shadow: 5px 5px 10px 5px lightgray;
     ${mobile({ width: '90%' })}
+    // background-color: #f5fbfd;
 `;
 
 const Title = styled.h1`
     font-size: 24px;
     font-weight: 300;
+    margin-top: 10px;
 `;
 
 const Form = styled.form`
@@ -52,7 +57,10 @@ const Input = styled.input`
 
 const Agreement = styled.span`
     font-size: 12px;
-    margin: 20px 0px;
+    width: 97%;
+    // margin: 20px 8px 20px 0px;
+    margin: 15px 0;
+    text-align: justify;
 `;
 
 const Button = styled.button`
@@ -99,6 +107,17 @@ const Register = () => {
             <Announcement />
             <Container>
                 <Wrapper>
+                <Link to="/"
+                        style={{
+                            fontSize: "15px",
+                            color: "black",
+                            cursor: "pointer",
+                            textDecoration: "none"
+                        }}
+                    >
+                        <ArrowBack style={{fontSize: "10px"}} />
+                        {"\t\t"} Back to Home
+                    </Link>
                     <Title>CREATE AN ACCOUNT</Title>
                     <Form onSubmit={handleSubmit}>
                         <Input
@@ -137,6 +156,7 @@ const Register = () => {
                     </Link>
                 </Wrapper>
             </Container>
+            <Newsletter />
             <Footer />
         </>
     );
