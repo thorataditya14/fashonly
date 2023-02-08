@@ -175,7 +175,7 @@ const Navbar = () => {
                                 </MenuItem>
                             </Link>
                             <Username>
-                                <b>Hello! {user.username}</b>
+                                <b>Hello {user.username}!</b>
                             </Username>
                         </>
                     ) : (

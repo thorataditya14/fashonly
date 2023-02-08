@@ -24,12 +24,12 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-    width: 30%;
+    width: 500px;
     padding: 20px;
     background-color: white;
     border: 1px solid lightgray;
     box-shadow: 5px 5px 10px 5px lightgray;
-    ${mobile({ width: '75%' })}
+    ${mobile({ width: '90%' })}
 `;
 
 const Title = styled.h1`

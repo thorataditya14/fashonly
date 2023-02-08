@@ -21,18 +21,21 @@ const Wrapper = styled.div`
 
 const ImgContainer = styled.div`
     flex: 1;
+    display: flex;
+    // align-items: center;
+    justify-content: center;
 `;
 
 const Image = styled.img`
-    width: 100%;
-    height: 90vh;
+    max-width: 90%;
+    max-height: 90%;
     object-fit: cover;
     ${mobile({ height: '40vh' })}
 `;
 
 const InfoContainer = styled.div`
     flex: 1;
-    padding: 0px 50px;
+    padding: 40px 50px;
     ${mobile({ padding: '10px' })}
 `;
 
@@ -71,6 +74,7 @@ const FilterColor = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 50%;
+    border: 1px solid grey;
     background-color: ${(props) => props.color};
     margin: 0px 5px;
     cursor: pointer;
@@ -166,7 +170,7 @@ const Product = () => {
                 <InfoContainer>
                     <Title>{product.title}</Title>
                     <Desc>{product.desc}</Desc>
-                    <Price>$ {product.price}</Price>
+                    <Price>{product.price} INR</Price>
                     <FilterContainer>
                         <Filter>
                             <FilterTitle>Color</FilterTitle>

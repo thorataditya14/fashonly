@@ -10,13 +10,11 @@ import { useHistory } from 'react-router';
 import { mobile } from '../responsive';
 import { Link } from 'react-router-dom';
 import {
-    addProduct,
     incrementQuantity,
     decrementQuantity,
     removeProduct
 } from '../redux/cartRedux';
 import { useDispatch } from 'react-redux';
-import { Add, Remove } from '@material-ui/icons';
 
 
 require('dotenv').config()
@@ -228,7 +226,7 @@ const Cart = () => {
             } catch { }
         };
         stripeToken && getTotalAmount() > 0 && makeRequest();
-    }, [stripeToken, cart, history]);
+    }, [stripeToken, cart, history, getTotalAmount]);
 
 
     const handleCheckout = () => {
