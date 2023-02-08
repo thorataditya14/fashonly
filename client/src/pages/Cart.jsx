@@ -39,22 +39,23 @@ const Title = styled.h1`
 
 const Bottom = styled.div`
     display: flex;
-    justify-content: space-between;
-    gap: 30px;
+    justify-content: center;
     ${mobile({ flexDirection: 'column' })}
-`;
+    `;
 
 const Info = styled.div`
+    align-items: center;
     flex: 3;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    // gap: 10px;
 `;
 
 const Product = styled.div`
     border: 1px solid lightgray;
     padding: 10px;
-    height: 170px;
+    height: 210px;
+    width: 80%;
     margin: 10px 5px;
     display: flex;
     justify-content: space-between;
@@ -62,30 +63,30 @@ const Product = styled.div`
 `;
 
 const ProductDetail = styled.div`
-    height: 165px;
+    height: 210px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 15px;
+    gap: 30px;
     flex: 7;
 `;
 
 const ImgContainer = styled.div`
-    width: 120px;
-    height: 160px;
+    width: 160px;
+    height: 200px;
     border: 1px solid lightgray;
 `;
 
 const Image = styled.img`
-    width: 120px;
-    height: 160px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 `;
 
 const Details = styled.span`
     height: 145px;
     display: flex;
-    gap: 20px;
+    gap: 10px;
     padding: 10px 5px;
     flex-direction: column;
     align-items: flex-start;
@@ -96,9 +97,8 @@ const Details = styled.span`
 
 const ProductName = styled.span`
     font-size: 24px;
-    // margin: 20px 5px;
     ${mobile({ margin: '5px 15px' })}
-    // margin: 10px 0;
+    padding: 10px auto;
     position: absolute;
     top: 10px;
 `;
@@ -118,9 +118,8 @@ const ProductQuantity = styled.div`
 `;
 
 const PriceDetail = styled.div`
-    height: 165px;
-    // margin: 15px 5px;
-    height: 145px;
+    height: 160px;
+    margin: 15px 5px;
     padding: 10px 0;
     flex: 3;
     display: flex;
@@ -128,13 +127,16 @@ const PriceDetail = styled.div`
     align-items: center;
     justify-content: flex-end;
     // margin: 10px 0;
+    // border: 1px solid;
+    font-size: 18px;
+    font-weight: 600;
 `;
 
 const ProductTotal = styled.div`
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 24px;
     width: 90%;
     text-align: center;
+    margin-top: 5px;
     ${mobile({ marginBottom: '20px' })}
 `;
 
@@ -167,11 +169,9 @@ const SummaryItem = styled.div`
     font-size: ${(props) => props.type === 'total' && '24px'};
 `;
 
-const SummaryItemText = styled.span`
-`;
+const SummaryItemText = styled.span``;
 
-const SummaryItemPrice = styled.span`
-`;
+const SummaryItemPrice = styled.span``;
 
 const Button = styled.button`
     width: 100%;
@@ -193,7 +193,6 @@ const ProductButton = styled.button`
     font-size: 16px;
     // margin: 5px;
     cursor: pointer;
-
     &:hover {
         transform: scale(1.1);
     }
@@ -204,7 +203,7 @@ const RemoveButton = styled.button`
     padding: 10px;
     background-color: transparent;
     border: none;
-    margin-top: 10px;
+    margin-top: 25px;
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
@@ -271,7 +270,13 @@ const Cart = () => {
                                     </ImgContainer>
                                     <Details>
                                         <ProductName>
-                                            <b>{product.title}</b>
+                                            <Link to={`/product/${product._id}`}
+                                                style={{
+                                                    color: "black"
+                                                }}
+                                            >
+                                                <b>{product.title}</b>
+                                            </Link>
                                         </ProductName>
                                         <ProductPrice>
                                             <b>Price:</b> {product.price} INR
@@ -289,9 +294,8 @@ const Cart = () => {
                                     </Details>
                                 </ProductDetail>
                                 <PriceDetail>
+                                    Product Total
                                     <ProductTotal>
-                                        Product Total
-                                        <br />
                                         {product.price * product.quantity} INR
                                     </ProductTotal>
                                     <RemoveButton onClick={() => dispatch(removeProduct(product._id))}>
@@ -310,11 +314,11 @@ const Cart = () => {
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Estimated Shipping</SummaryItemText>
-                            <SummaryItemPrice>5.90 INR</SummaryItemPrice>
+                            <SummaryItemPrice>500 INR</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Shipping Discount</SummaryItemText>
-                            <SummaryItemPrice>-5.90 INR</SummaryItemPrice>
+                            <SummaryItemPrice>-500 INR</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem type='total'>
                             <SummaryItemText>Total</SummaryItemText>

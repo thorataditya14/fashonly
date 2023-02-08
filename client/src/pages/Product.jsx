@@ -113,7 +113,7 @@ const Amount = styled.span`
 `;
 
 const Button = styled.button`
-    padding: 15px;
+    padding: 10px;
     border: 2px solid teal;
     background-color: white;
     cursor: pointer;
