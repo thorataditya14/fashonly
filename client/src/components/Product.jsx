@@ -28,6 +28,8 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     background-color: #f5fbfd;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
     position: relative;
     &:hover ${Info} {
         opacity: 1;
@@ -40,6 +42,8 @@ const Image = styled.img`
     border-radius: 50%;
     z-index: 2;
     object-fit: contain;
+    border: 1px solid #e0e0e0;
+    background-color: white;
 `;
 
 const Name = styled.div`

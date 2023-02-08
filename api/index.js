@@ -21,7 +21,7 @@ mongoose.connect(
 });
 
 
-const PORT = 5001;
+const PORT = 5000;
 
 
 app.use(express.json());
