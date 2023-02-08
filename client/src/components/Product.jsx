@@ -29,24 +29,17 @@ const Container = styled.div`
     justify-content: center;
     background-color: #f5fbfd;
     position: relative;
-
     &:hover ${Info} {
         opacity: 1;
     }
 `;
 
-const Circle = styled.div`
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background-color: white;
-    position: absolute;
-    top: 20px
-`;
-
 const Image = styled.img`
-    height: 65%;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
     z-index: 2;
+    object-fit: contain;
 `;
 
 const Name = styled.div`
@@ -90,16 +83,10 @@ const StrikeThrough = styled.s`
 `;
 
 const ColorContainer = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-margin-top: 15px;
-    // width: 20px;
-    // height: 20px;
-    // border-radius: 50%;
-    // border: 1px solid grey;
-    // background-color: ${(props) => props.color};
-    // cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
 `;
 
 const ColorCircle = styled.div`
@@ -117,7 +104,6 @@ const Product = ({ item }) => {
     return (
         <>
             <Container>
-                <Circle />
                 <Image src={item.img} />
                 <Link
                     to={`/product/${item._id}`}
